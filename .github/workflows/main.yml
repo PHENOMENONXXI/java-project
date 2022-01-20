@@ -35,3 +35,6 @@ jobs:
         run: docker build . --file Dockerfile --tag phenomenonxxi/gt-out-app
       - name: Docker Push
         run: docker push phenomenonxxi/gt-out-app
+      - name: Docker Pull, Build and Run
+        run: docker pull phenomenon/gt-out-app:latest
+      - run: docker run phenomenon/gt-out-app:latest

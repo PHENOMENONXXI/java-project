@@ -24,6 +24,7 @@ jobs:
       - name: Test with Maven
         run: mvn -B test --file pom.xml
       - run: mvn test
+      - run: mvn clean package
       - name: Docker Login
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}

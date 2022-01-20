@@ -32,6 +32,6 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag phenomenonxxi/gt-out-app:$(date +%s)
+        run: docker build . --file Dockerfile --tag phenomenonxxi/gt-out-app
       - name: Docker Push
         run: docker push phenomenonxxi/gt-out-app

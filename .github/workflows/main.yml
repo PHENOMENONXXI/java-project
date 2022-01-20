@@ -38,4 +38,6 @@ jobs:
         run: docker push phenomenonxxi/gt-out-app
       - name: Docker Pull, Build and Run
         run: docker pull phenomenonxxi/gt-out-app:latest
-      - run: docker run -d -p 8888:8080 phenomenonxxi/gt-out-app:latest | xargs docker logs
+      - run: |
+          docker run -d -p 8888:8080 phenomenonxxi/gt-out-app:latest > output.txt
+          docker logs < output.txt

@@ -21,4 +21,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag phenomenonxxi/gt-out-app:$(date +%s)
     - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USER}}/gt-out-app
+      run: docker push phenomenonxxi/gt-out-app

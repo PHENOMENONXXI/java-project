@@ -1,5 +1,14 @@
-FROM adoptopenjdk/openjdk11:jdk-11.0.2.9-slim
-ARG JAR_FILE=target/*.jar
-ADD ${JAR_FILE} /opt/hello.jar
+# Pull base image.
+FROM ubuntu:latest
 
-ENTRYPOINT exec java $JAVA_OPTS -jar /opt/hello.jar
+RUN \
+# Update
+apt-get update -y && \
+# Install Java
+apt-get install default-jre -y
+
+ADD ./target/gs-serving-web-content-0.1.0.jar spring-mvc-example.jar
+
+EXPOSE 8080
+
+CMD java -jar spring-mvc-example.jar

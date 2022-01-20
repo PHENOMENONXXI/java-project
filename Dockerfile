@@ -1,14 +1,15 @@
-# Pull base image.
-FROM ubuntu:latest
+#
+# Build stage
+#
+FROM maven:3.6.0-jdk-11-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean package
 
-RUN \
-# Update
-apt-get update -y && \
-# Install Java
-apt-get install default-jre -y
-
-ADD ./target/gs-serving-web-content-0.1.0.jar spring-mvc-example.jar
-
+#
+# Package stage
+#
+FROM openjdk:11-jre-slim
+COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
 EXPOSE 8080
-
-CMD java -jar spring-mvc-example.jar
+ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]

@@ -91,7 +91,7 @@ pipeline {
 //                 echo "Building the image"
 //                 """
                 script {
-                    dockerImage = docker.build registry
+                    sh "dockerImage = docker.build registry"
                 }
             }
         }
@@ -103,7 +103,7 @@ pipeline {
 //                 """
                 script {
                     docker.withRegistry('', registryCredential) {
-                        dockerImage.push()
+                        sh "dockerImage.push()"
                     }
                 }
             }

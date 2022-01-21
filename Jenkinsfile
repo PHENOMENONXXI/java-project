@@ -102,11 +102,16 @@ pipeline {
 //                 sh """
 //                 echo "Deploy the image"
 //                 """
-                script {
-                    docker.withRegistry('', registryCredential) {
-                        dockerImage.push("$BUILD_NUMBER")
-                    }
-                }
+//                 script {
+//                     docker.withRegistry('', registryCredential) {
+//                         dockerImage.push("$BUILD_NUMBER")
+//                     }
+//                 }
+                sh """
+                 echo "Deploy the image"
+                 docker login -p Botaqanym230500! -u phenomenonxxi
+                 docker image push phenomenonxxi/jk-out-app
+                 """
             }
         }
     }

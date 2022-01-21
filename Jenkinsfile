@@ -19,7 +19,7 @@ pipeline {
     
     environment {
         registry = "phenomenonxxi/jk-out-app"
-        registryCredential = 'phenomenonxxi'
+        registryCredential = 'dockerhub_id'
         dockerImage = ''
     }
 
@@ -91,7 +91,7 @@ pipeline {
 //                 echo "Building the image"
 //                 """
                 script {
-                    sh "dockerImage = docker.build registry"
+                    dockerImage = docker.build registry
                 }
             }
         }
@@ -103,7 +103,7 @@ pipeline {
 //                 """
                 script {
                     docker.withRegistry('', registryCredential) {
-                        sh "dockerImage.push()"
+                        dockerImage.push("$BUILD_NUMBER")
                     }
                 }
             }

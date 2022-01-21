@@ -68,29 +68,29 @@ pipeline {
 //             when {
 //                 branch 'develop'
 //             }
-        steps {
+            steps {
                 sh """
                 echo "Building Artifact"
                 """
-        }
+            }
             
-        steps {
+            steps {
                 sh """
                 echo "Cloning our Git"
                 """
                 git 'https://github.com/PHENOMENONXXI/java-project.git'
-        }
+            }
             
-        steps {
+            steps {
                 sh """
                 echo "Building the image"
                 """
                 script {
                 dockerImage = docker.build registry
                 }
-        }
+            }
             
-        steps {
+            steps {
                 sh """
                 echo "Deploy the image"
                 """
@@ -99,7 +99,7 @@ pipeline {
                         dockerImage.push()
                     }
                 }
-        
+            }
         }
 }
                 

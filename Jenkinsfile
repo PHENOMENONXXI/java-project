@@ -46,7 +46,8 @@ pipeline {
 
         stage(' Unit Testing') {
             steps {
-                sh 'mvn clean test'
+                sh 'mvn -B test --file pom.xml'
+                sh 'mvn test'
             }
         }
 

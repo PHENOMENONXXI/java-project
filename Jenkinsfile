@@ -12,6 +12,16 @@ pipeline {
                     numToKeepStr: '10'
             )
     }
+    
+    tools {
+        maven 'Maven3'
+    }
+    
+    environment {
+        registry = "phenomenonxxi/jk-out-app"
+        registryCredential = 'phenomenonxxi'
+        dockerImage = ''
+    }
 
     stages {
         
@@ -29,39 +39,67 @@ pipeline {
                 checkout([
                     $class: 'GitSCM', 
                     branches: [[name: '*/main']], 
-                    userRemoteConfigs: [[url: 'https://github.com/spring-projects/spring-petclinic.git']]
+                    userRemoteConfigs: [[url: 'https://github.com/PHENOMENONXXI/java-project.git']]
                 ])
             }
         }
 
         stage(' Unit Testing') {
             steps {
-                sh """
-                echo "Running Unit Tests"
-                """
+                sh 'mvn clean test'
             }
         }
 
-        stage('Code Analysis') {
+        stage('Package cleaning') {
             steps {
-                sh """
-                echo "Running Code Analysis"
-                """
+                sh 'mvn clean package'
             }
         }
+        
+//         stage('Code Analysis') {
+//             steps {
+//                 sh """
+//                 echo "Running Code Analysis"
+//                 """
+//             }
+//         }
 
         stage('Build Deploy Code') {
-            when {
-                branch 'develop'
-            }
+//             when {
+//                 branch 'develop'
+//             }
             steps {
                 sh """
                 echo "Building Artifact"
                 """
 
-                sh """
-                echo "Deploying Code"
-                """
+                stage('Cloning our Git') {
+                    steps {
+                        git 'https://github.com/PHENOMENONXXI/java-project.git'
+                    }
+                }
+                
+                stage('Building the image') {
+                    steps {
+                        script {
+                            dockerImage = docker.build registry
+                        }
+                    }
+                }
+                
+                stage('Deploy the image') {
+                    steps {
+                        script {
+                            docker.withRegistry('', registryCredential) {
+                                dockerImage.push()
+                            }
+                        }
+                    }
+                }
+                
+//                 sh """
+//                 echo "Deploying Code"
+//                 """
             }
         }
 

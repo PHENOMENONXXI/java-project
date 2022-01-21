@@ -90,9 +90,10 @@ pipeline {
 //                 sh """
 //                 echo "Building the image"
 //                 """
-                script {
-                    dockerImage = docker.build registry
-                }
+//                 script {
+//                     dockerImage = docker.build registry
+//                 }
+                sh "docker build . --file Dockerfile -t phenomenonxxi/jk-out-app"
             }
         }
         

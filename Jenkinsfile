@@ -68,34 +68,38 @@ pipeline {
 //             when {
 //                 branch 'develop'
 //             }
-            steps {
+        steps {
                 sh """
                 echo "Building Artifact"
                 """
-
-                stage('Cloning our Git') {
-                    steps {
-                        git 'https://github.com/PHENOMENONXXI/java-project.git'
-                    }
+        }
+            
+        steps {
+                sh """
+                echo "Cloning our Git"
+                """
+                git 'https://github.com/PHENOMENONXXI/java-project.git'
+        }
+            
+        steps {
+                sh """
+                echo "Building the image"
+                """
+                script {
+                dockerImage = docker.build registry
                 }
-                
-                stage('Building the image') {
-                    steps {
-                        script {
-                            dockerImage = docker.build registry
-                        }
-                    }
+        }
+            
+        steps {
+                sh """
+                echo "Deploy the image"
+                """
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
                 }
-                
-                stage('Deploy the image') {
-                    steps {
-                        script {
-                            docker.withRegistry('', registryCredential) {
-                                dockerImage.push()
-                            }
-                        }
-                    }
-                }
+        }
+}
                 
 //                 sh """
 //                 echo "Deploying Code"

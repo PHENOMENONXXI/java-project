@@ -81,7 +81,7 @@ pipeline {
 //                 sh """
 //                 echo "Cloning our Git"
 //                 """
-                git clone 'https://github.com/PHENOMENONXXI/java-project.git'
+                sh "git clone 'https://github.com/PHENOMENONXXI/java-project.git'"
             }
         }
         

@@ -14,7 +14,7 @@ pipeline {
     }
     
     tools {
-        maven 'Maven3'
+        maven 'maven3'
     }
     
     environment {
@@ -68,11 +68,11 @@ pipeline {
 //             when {
 //                 branch 'develop'
 //             }
-            steps {
-                sh """
-                echo "Building Artifact"
-                """
-            }
+//             steps {
+//                 sh """
+//                 echo "Building Artifact"
+//                 """
+//             }
             
             steps {
                 sh """
@@ -101,7 +101,7 @@ pipeline {
                 }
             }
         }
-}
+    }
                 
 //                 sh """
 //                 echo "Deploying Code"

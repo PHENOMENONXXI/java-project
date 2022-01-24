@@ -94,7 +94,9 @@ pipeline {
 //                     dockerImage = docker.build registry
 //                 }
 //                 sh "docker build . --file Dockerfile -t phenomenonxxi/jk-out-app"
-                dockerImage = docker.build("phenomenonxxi/jk-out-app")
+                script{
+                    dockerImage = docker.build("phenomenonxxi/jk-out-app")
+                }
             }
         }
         
@@ -113,9 +115,11 @@ pipeline {
 //                  docker login -p Botaqanym230500! -u phenomenonxxi
 //                  docker image push phenomenonxxi/jk-out-app
 //                  """
-                docker.withRegistry('https://registry.hub.docker.com', 'git'){
-                    dockerImage.push("");
-                    dockerImage.push("latest");
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', 'git'){
+                        dockerImage.push("");
+                        dockerImage.push("latest");
+                    }
                 }
             }
         }
